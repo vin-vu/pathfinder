@@ -10,10 +10,10 @@ export default function Navbar() {
         <Toolbar>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              display: 'flex',
+              justifyContent: 'center',
               gap: 10,
-              width: "100%",
+              width: '100%',
             }}
           >
             <Button color="inherit">SET START NODE</Button>
