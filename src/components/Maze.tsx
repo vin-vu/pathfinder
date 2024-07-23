@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 interface BoardCell {
   visited: boolean;
@@ -23,16 +23,23 @@ export default function Maze() {
   }, []);
 
   return (
-    <Grid container>
+    <Grid
+      container
+      sx={{
+        display: 'grid',
+        'grid-template-columns': 'repeat(30, 1fr)',
+      }}
+    >
       {Object.entries(board).map(([key, cell]) => (
         <Grid key={key} item>
-          <div
-            style={{
+          <Box
+            sx={{
               height: '20px',
               width: '20px',
-              backgroundColor: cell.visited === true ? 'white' : 'black',
+              border: '1px solid gray',
+              backgroundColor: cell.visited === true ? 'black' : 'white',
             }}
-          ></div>
+          ></Box>
         </Grid>
       ))}
     </Grid>
