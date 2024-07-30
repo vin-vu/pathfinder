@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material';
 import { CursorModeType } from '../types/CursorTypes';
+import MazeCell from './MazeCell';
 
 interface MazeProps {
   cursorMode: CursorModeType;
 }
 
-interface BoardCell {
+export interface BoardCell {
   visited: boolean;
   startNode: boolean;
   targetNode: boolean;
@@ -17,8 +18,7 @@ type Board = {
 };
 
 export default function Maze({ cursorMode }: MazeProps) {
-
-  console.log('cursor mode: ', cursorMode)
+  console.log('cursor mode: ', cursorMode);
   const [board, setBoard] = useState<Board>({});
 
   const rows: number = 15;
@@ -55,36 +55,16 @@ export default function Maze({ cursorMode }: MazeProps) {
     setBoard(newBoard);
   }, []);
 
-  const handleCellBackgroundColor = (cell: BoardCell): string => {
-    if (cell.visited) {
-      return 'black';
-    } else if (cell.startNode) {
-      return 'blue';
-    } else if (cell.targetNode) {
-      return 'red';
-    }
-    return 'white';
-  };
-
   return (
     <Grid
       container
       sx={{
         display: 'grid',
-        'gridTemplateColumns': `repeat(${columns}, 1fr)`,
+        gridTemplateColumns: `repeat(${columns}, 1fr)`,
       }}
     >
       {Object.entries(board).map(([key, cell]) => (
-        <Grid key={key} item>
-          <Box
-            sx={{
-              height: '30px',
-              width: '30px',
-              border: '1px solid gray',
-              backgroundColor: handleCellBackgroundColor(cell),
-            }}
-          ></Box>
-        </Grid>
+        <MazeCell key={key} cell={cell} />
       ))}
     </Grid>
   );
