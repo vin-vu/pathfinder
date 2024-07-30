@@ -25,8 +25,12 @@ export default function Navbar({ setCursorMode }: NavbarProps) {
             <Button color="inherit" onClick={() => setCursorMode('start')}>
               SET START NODE
             </Button>
-            <Button color="inherit" onClick={() => setCursorMode('target')}>SET TARGET NODE</Button>
-            <Button color="inherit" onClick={() => setCursorMode('walls')}>ADD WALLS</Button>
+            <Button color="inherit" onClick={() => setCursorMode('target')}>
+              SET TARGET NODE
+            </Button>
+            <Button color="inherit" onClick={() => setCursorMode('walls')}>
+              ADD WALLS
+            </Button>
             <Button color="inherit">CLEAR BOARD</Button>
             <Button color="inherit">RUN ALGORITHM</Button>
           </Box>

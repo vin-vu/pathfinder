@@ -1,6 +1,6 @@
 import { Grid, Box } from '@mui/material';
-import { BoardCell } from './Maze';
 import { CursorModeType } from '../types/CursorTypes';
+import { BoardCell } from '../App';
 
 interface MazeCellProps {
   setStartCoordinates: React.Dispatch<React.SetStateAction<string>>;
