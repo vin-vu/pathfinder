@@ -3,6 +3,7 @@ import { BoardCell } from './Maze';
 
 interface MazeCellProps {
   cell: BoardCell;
+  coordinates: string;
 }
 
 const handleCellBackgroundColor = (cell: BoardCell): string => {
@@ -16,7 +17,7 @@ const handleCellBackgroundColor = (cell: BoardCell): string => {
   return 'white';
 };
 
-export default function MazeCell({ cell }: MazeCellProps) {
+export default function MazeCell({ cell, coordinates }: MazeCellProps) {
   return (
     <Grid item>
       <Box
@@ -24,7 +25,7 @@ export default function MazeCell({ cell }: MazeCellProps) {
           height: '30px',
           width: '30px',
           border: '1px solid gray',
-          backgroundColor: handleCellBackgroundColor(cell),
+          backgroundColor: handleCellBackgroundColor(cell),          
         }}
       ></Box>
     </Grid>
