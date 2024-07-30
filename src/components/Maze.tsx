@@ -18,10 +18,9 @@ type Board = {
 };
 
 export default function Maze({ cursorMode }: MazeProps) {
-  console.log('cursor mode: ', cursorMode);
   const [board, setBoard] = useState<Board>({});
-  const [startCoordinates, setStartCoordinates] = useState<string>('7,6')
-  const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23')
+  const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
+  const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
 
   const rows: number = 15;
   const columns: number = 30;
@@ -53,15 +52,7 @@ export default function Maze({ cursorMode }: MazeProps) {
       }
     }
     setBoard(newBoard);
-  }, []);
-
-  const updateBoard = (coordinates: string) => {
-    // copy the old board
-    // update the board cell based on cell clicked (need coord) and cursor mode
-    // update board state when board cell is clicked depending on cursor mode
-    const newBoard: Board = {...board};
-    setBoard(newBoard);
-  }
+  }, [startCoordinates, targetCoordinates]);
 
   return (
     <Grid
@@ -72,7 +63,14 @@ export default function Maze({ cursorMode }: MazeProps) {
       }}
     >
       {Object.entries(board).map(([key, cell]) => (
-        <MazeCell key={key} cell={cell} coordinates={key} />
+        <MazeCell
+          key={key}
+          cell={cell}
+          coordinates={key}
+          setStartCoordinates={setStartCoordinates}
+          setTargetCoordinates={setTargetCoordinates}
+          cursorMode={cursorMode}
+        />
       ))}
     </Grid>
   );
