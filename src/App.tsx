@@ -8,6 +8,13 @@ export interface BoardCell {
   visited: boolean;
   startNode: boolean;
   targetNode: boolean;
+  wall: boolean;
+}
+
+export interface MouseStatuses {
+  down: boolean;
+  move: boolean;
+  up: boolean;
 }
 
 export type Board = {
@@ -19,6 +26,11 @@ function App() {
   const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
   const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
+  const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
+    down: false,
+    move: false,
+    up: false,
+  });
   const rows: number = 15;
   const columns: number = 30;
 
@@ -38,18 +50,21 @@ function App() {
               visited: false,
               startNode: true,
               targetNode: false,
+              wall: false,
             };
           } else if (coordinates === targetCoordinates) {
             newBoard[coordinates] = {
               visited: false,
               startNode: false,
               targetNode: true,
+              wall: false,
             };
           } else {
             newBoard[coordinates] = {
               visited: false,
               startNode: false,
               targetNode: false,
+              wall: false,
             };
           }
         }
@@ -71,6 +86,36 @@ function App() {
     setBoard(newBoard);
   };
 
+  const handleMouseDown = (coordinates: string) => {
+    setMouseStatus({ ...mouseStatus, down: true });
+    if (cursorMode === 'walls') {
+      updateBoardWithWalls(coordinates);
+      console.log('mouse down walls: ', coordinates)
+    }
+  };
+
+  const handleMouseMove = (coordinates: string) => {
+    setMouseStatus({ ...mouseStatus, move: true });
+    if (cursorMode === 'walls' && mouseStatus.down) {
+      updateBoardWithWalls(coordinates);
+      console.log('mouse move walls: ', coordinates)
+
+    }
+  };
+
+  const handleMouseUp = () => {
+    setMouseStatus({ down: false, move: false, up: true });
+    console.log('mouse up')
+  };
+
+  const updateBoardWithWalls = (coordinates: string) => {
+    const updatedBoard = {
+      ...board,
+      [coordinates]: { ...board[coordinates], wall: true },
+    };
+    setBoard(updatedBoard);
+  };
+
   useEffect(() => {
     const newboard: Board = generateBoard(
       rows,
@@ -89,6 +134,11 @@ function App() {
         setStartCoordinates={setStartCoordinates}
         setTargetCoordinates={setTargetCoordinates}
         cursorMode={cursorMode}
+        // mouseStatus={mouseStatus}
+        // setMouseStatus={setMouseStatus}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
         columns={columns}
       />
     </>
