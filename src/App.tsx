@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CursorModeType } from './types/CursorTypes';
 import Navbar from './components/Navbar';
 import Maze from './components/Maze';
@@ -19,18 +19,62 @@ function App() {
   const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
   const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
+  const rows: number = 15;
+  const columns: number = 30;
+
+  const generateBoard = (
+    rows: number,
+    columns: number,
+    startCoordinates: string,
+    targetCoordinates: string
+  ) => {
+    const newBoard: Board = {};
+    for (let i = 0; i < rows; i += 1) {
+      for (let j = 0; j < columns; j += 1) {
+        const coordinates: string = `${i},${j}`;
+        if (coordinates === startCoordinates) {
+          newBoard[coordinates] = {
+            visited: false,
+            startNode: true,
+            targetNode: false,
+          };
+        } else if (coordinates === targetCoordinates) {
+          newBoard[coordinates] = {
+            visited: false,
+            startNode: false,
+            targetNode: true,
+          };
+        } else {
+          newBoard[coordinates] = {
+            visited: false,
+            startNode: false,
+            targetNode: false,
+          };
+        }
+      }
+    }
+    return newBoard;
+  };
+
+  useEffect(() => {
+    const board: Board = generateBoard(
+      rows,
+      columns,
+      startCoordinates,
+      targetCoordinates
+    );
+    setBoard(board);
+  }, [rows, columns, startCoordinates, targetCoordinates]);
 
   return (
     <>
       <Navbar setCursorMode={setCursorMode} />
       <Maze
         board={board}
-        setBoard={setBoard}
-        startCoordinates={startCoordinates}
         setStartCoordinates={setStartCoordinates}
-        targetCoordinates={targetCoordinates}
         setTargetCoordinates={setTargetCoordinates}
         cursorMode={cursorMode}
+        columns={columns}
       />
     </>
   );
