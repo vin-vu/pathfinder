@@ -7,9 +7,10 @@ import React from 'react';
 
 interface NavbarProps {
   setCursorMode: React.Dispatch<React.SetStateAction<CursorModeType>>;
+  resetBoard: () => void;
 }
 
-export default function Navbar({ setCursorMode }: NavbarProps) {
+export default function Navbar({ setCursorMode, resetBoard }: NavbarProps) {
   return (
     <>
       <AppBar>
@@ -31,7 +32,9 @@ export default function Navbar({ setCursorMode }: NavbarProps) {
             <Button color="inherit" onClick={() => setCursorMode('walls')}>
               ADD WALLS
             </Button>
-            <Button color="inherit">CLEAR BOARD</Button>
+            <Button color="inherit" onClick={() => resetBoard()}>
+              CLEAR BOARD
+            </Button>
             <Button color="inherit">RUN ALGORITHM</Button>
           </Box>
         </Toolbar>
