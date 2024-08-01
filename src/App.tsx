@@ -35,7 +35,8 @@ function App() {
   });
 
   const handleMouseDown = (coordinates: string): void => {
-    setMouseStatus({ ...mouseStatus, down: true });
+    // setMouseStatus({ ...mouseStatus, down: true });
+    setMouseStatus({down: true, move: false, up: false });
     if (cursorMode === 'start') {
       setStartCoordinates(coordinates);
     } else if (cursorMode === 'target') {
