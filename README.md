@@ -1,30 +1,50 @@
-# React + TypeScript + Vite
+# Pathfinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pathfinder is a React TypeScript project designed to visualize the shortest path between two nodes on a 2D grid using the Breadth-First Search (BFS) algorithm. This project leverages Material UI for its component library, ensuring responsiveness and a modern design.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- **Visualize Pathfinding**: Visualize the shortest path between two nodes on a 2D grid using the BFS algorithm.
+- **Responsive Design**: The project uses Material UI to ensure the interface is responsive and user-friendly.
+- **Interactive Grid**: Users can interact with the grid, setting start and target nodes, and adding walls to see how the algorithm adapts.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Technologies
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Material UI**: A popular React UI framework that provides responsive, accessible, and customizable components.
+- **BFS Algorithm**: A pathfinding algorithm used to find the shortest path in a grid-based environment.
+
+## Installation
+
+To get started with Pathfinder, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/pathfinder.git
+   ```
+   
+2. Navigate to project directory:
+   ```bash
+   cd pathfinder
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+## Usage
+1. To run the project locally, use the following command:
+   ```bash
+   npm start
+   ```
+
