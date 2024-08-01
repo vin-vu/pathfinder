@@ -1,12 +1,10 @@
 import { Grid } from '@mui/material';
 import { CursorModeType } from '../types/CursorTypes';
 import MazeCell from './MazeCell';
-import { Board, MouseStatuses } from '../App';
+import { Board } from '../App';
 
 interface MazeProps {
   board: Board;
-  setStartCoordinates: React.Dispatch<React.SetStateAction<string>>;
-  setTargetCoordinates: React.Dispatch<React.SetStateAction<string>>;
   onMouseDown: (coordinates: string) => void;
   onMouseMove: (coordinates: string) => void;
   onMouseUp: () => void;
@@ -16,12 +14,9 @@ interface MazeProps {
 
 export default function Maze({
   board,
-  setStartCoordinates,
-  setTargetCoordinates,
   onMouseDown,
   onMouseMove,
   onMouseUp,
-  cursorMode,
   columns,
 }: MazeProps) {
   return (
@@ -32,20 +27,14 @@ export default function Maze({
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
       }}
     >
-      {Object.entries(board).map(([key, cell]) => (
-        
+      {Object.entries(board).map(([coordinates, cell]) => (
         <MazeCell
-          key={key}
+          key={coordinates}
           cell={cell}
-          coordinates={key}
-          setStartCoordinates={setStartCoordinates}
-          setTargetCoordinates={setTargetCoordinates}
-          onMouseDown={() => onMouseDown(key)}
-          onMouseMove={() => onMouseMove(key)}
+          coordinates={coordinates}
+          onMouseDown={() => onMouseDown(coordinates)}
+          onMouseMove={() => onMouseMove(coordinates)}
           onMouseUp={() => onMouseUp()}
-          // setMouseStatus={setMouseStatus}
-          // mouseStatus={mouseStatus}
-          cursorMode={cursorMode}
         />
       ))}
     </Grid>

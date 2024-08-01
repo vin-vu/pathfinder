@@ -22,6 +22,8 @@ export type Board = {
 };
 
 function App() {
+  const rows: number = 15;
+  const columns: number = 30;
   const [board, setBoard] = useState<Board>({});
   const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
   const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
@@ -31,8 +33,42 @@ function App() {
     move: false,
     up: false,
   });
-  const rows: number = 15;
-  const columns: number = 30;
+
+  const handleMouseDown = (coordinates: string): void => {
+    setMouseStatus({ ...mouseStatus, down: true });
+    if (cursorMode === 'start') {
+      setStartCoordinates(coordinates);
+    } else if (cursorMode === 'target') {
+      setTargetCoordinates(coordinates);
+    } else if (cursorMode === 'walls') {
+      addWalls(coordinates);
+    }
+  };
+
+  const handleMouseMove = (coordinates: string): void => {
+    setMouseStatus({ ...mouseStatus, move: true });
+    if (cursorMode === 'walls') {
+      addWalls(coordinates);
+    }
+  };
+
+  const handleMouseUp = (): void => {
+    setMouseStatus({ down: false, move: false, up: true });
+  };
+
+  const addWalls = (coordinates: string): void => {
+    if (
+      mouseStatus.down === true &&
+      mouseStatus.move === true &&
+      cursorMode === 'walls'
+    ) {
+      const updatedBoard: Board = {
+        ...board,
+        [coordinates]: { ...board[coordinates], wall: true },
+      };
+      setBoard(updatedBoard);
+    }
+  };
 
   const generateBoard = useCallback(
     (
@@ -74,7 +110,7 @@ function App() {
     []
   );
 
-  const resetBoard = () => {
+  const resetBoard = (): void => {
     setStartCoordinates('7,6');
     setTargetCoordinates('7,23');
     const newBoard = generateBoard(
@@ -84,36 +120,6 @@ function App() {
       targetCoordinates
     );
     setBoard(newBoard);
-  };
-
-  const handleMouseDown = (coordinates: string) => {
-    setMouseStatus({ ...mouseStatus, down: true });
-    if (cursorMode === 'walls') {
-      updateBoardWithWalls(coordinates);
-      console.log('mouse down walls: ', coordinates)
-    }
-  };
-
-  const handleMouseMove = (coordinates: string) => {
-    setMouseStatus({ ...mouseStatus, move: true });
-    if (cursorMode === 'walls' && mouseStatus.down) {
-      updateBoardWithWalls(coordinates);
-      console.log('mouse move walls: ', coordinates)
-
-    }
-  };
-
-  const handleMouseUp = () => {
-    setMouseStatus({ down: false, move: false, up: true });
-    console.log('mouse up')
-  };
-
-  const updateBoardWithWalls = (coordinates: string) => {
-    const updatedBoard = {
-      ...board,
-      [coordinates]: { ...board[coordinates], wall: true },
-    };
-    setBoard(updatedBoard);
   };
 
   useEffect(() => {
@@ -131,11 +137,7 @@ function App() {
       <Navbar setCursorMode={setCursorMode} resetBoard={resetBoard} />
       <Maze
         board={board}
-        setStartCoordinates={setStartCoordinates}
-        setTargetCoordinates={setTargetCoordinates}
         cursorMode={cursorMode}
-        // mouseStatus={mouseStatus}
-        // setMouseStatus={setMouseStatus}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
