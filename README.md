@@ -2,6 +2,8 @@
 
 Pathfinder is a React TypeScript project designed to visualize the shortest path between two nodes on a 2D grid using the Breadth-First Search (BFS) algorithm. This project leverages Material UI for its component library, ensuring responsiveness and a modern design.
 
+This project is currently in development.
+
 ## Table of Contents
 
 - [Features](#features)
