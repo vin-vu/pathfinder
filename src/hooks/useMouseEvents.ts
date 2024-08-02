@@ -38,30 +38,52 @@ export const useMouseEvents = ({
   const handleMouseMove = useCallback(
     (coordinates: string): void => {
       setMouseStatus({ down: true, move: true, up: false });
-      if (cursorMode === 'walls') {
+      if (cursorMode === 'walls' && mouseStatus.down && mouseStatus.move) {
         addWalls(coordinates);
+        console.log('painting: ', mouseStatus)
       }
+      document.addEventListener(
+        'mouseup',
+        () => {
+          console.log('mouse up');
+          setMouseStatus({ down: false, move: false, up: true });
+        },
+        { once: true }
+      );
     },
-    [cursorMode, addWalls]
+    [cursorMode, addWalls, mouseStatus]
   );
+
+  // const handleMouseLeave = useCallback(() => {
+  //   if (mouseStatus.down) {
+  //     setMouseStatus((prev) => ({ ...prev, move: false }));
+  //   }
+  // }, [mouseStatus.down]);
 
   const handleMouseUp = useCallback((): void => {
     setMouseStatus({ down: false, move: false, up: true });
   }, []);
 
-  useEffect(() => {
-    const handleMouseOut = (event: MouseEvent) => {
-      if (mouseStatus.down) {
-        setMouseStatus({ down: false, move: false, up: true });
-      }
-    };
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseout', handleMouseOut);
+  // useEffect(() => {
+  //   const handleMouseOut = (event: MouseEvent) => {
+  //     if (mouseStatus.down) {
+  //       setMouseStatus({ down: false, move: false, up: true });
+  //       console.log('mouse out down')
+  //     }
+  //   };
+  //   document.addEventListener('mouseup', handleMouseUp);
+  //   document.addEventListener('mouseout', handleMouseOut);
 
-    return () => {
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mouseout', handleMouseOut);
-    };
-  }, [mouseStatus.down, handleMouseUp]);
-  return { handleMouseDown, handleMouseMove, handleMouseUp };
+  //   return () => {
+  //     document.removeEventListener('mouseup', handleMouseUp);
+  //     document.removeEventListener('mouseout', handleMouseOut);
+  //   };
+  // }, [mouseStatus.down, handleMouseUp]);
+
+  return {
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    mouseStatus,
+  };
 };
