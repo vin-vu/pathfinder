@@ -12,8 +12,8 @@ interface UseMouseEventParams {
 export const useMouseEvents = ({
   cursorMode,
   updateBoardNode,
-  setStartCoordinates,
-  setTargetCoordinates,
+  // setStartCoordinates,
+  // setTargetCoordinates,
 }: UseMouseEventParams) => {
   const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
     down: false,
@@ -25,15 +25,20 @@ export const useMouseEvents = ({
     (coordinates: string): void => {
       setMouseStatus({ down: true, move: false, up: false });
       if (cursorMode === 'start') {
-        setStartCoordinates(coordinates);
+        // setStartCoordinates(coordinates);
+        const startCell: BoardCell = {visited: false, startNode: true, targetNode: false, wall: false}
+        updateBoardNode(coordinates, startCell)
       } else if (cursorMode === 'target') {
-        setTargetCoordinates(coordinates);
+        // setTargetCoordinates(coordinates);
+        const targetCell: BoardCell = {visited: false, startNode: false, targetNode: true, wall: false}
+        updateBoardNode(coordinates, targetCell)
       } else if (cursorMode === 'walls') {
         const boardCell: BoardCell = {visited: false, startNode: false, targetNode: false, wall: true}
         updateBoardNode(coordinates, boardCell)
       }
     },
-    [cursorMode, updateBoardNode, setStartCoordinates, setTargetCoordinates]
+    [cursorMode, updateBoardNode]
+    // [cursorMode, updateBoardNode, setStartCoordinates, setTargetCoordinates]
   );
 
   // const handleMouseMove = useCallback(
