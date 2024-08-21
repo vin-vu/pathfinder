@@ -4,7 +4,6 @@ import { CursorModeType } from '../types/CursorTypes';
 
 interface UseMouseEventParams {
   cursorMode: CursorModeType;
-  // addWalls: (coordinates: string) => void;
   updateBoardNode: (coordinates: string, boardCell: BoardCell) => void;
   setStartCoordinates: (coordinates: string) => void;
   setTargetCoordinates: (coordinates: string) => void;
@@ -12,7 +11,6 @@ interface UseMouseEventParams {
 
 export const useMouseEvents = ({
   cursorMode,
-  // addWalls,
   updateBoardNode,
   setStartCoordinates,
   setTargetCoordinates,
@@ -31,7 +29,6 @@ export const useMouseEvents = ({
       } else if (cursorMode === 'target') {
         setTargetCoordinates(coordinates);
       } else if (cursorMode === 'walls') {
-        // addWalls(coordinates);
         const boardCell: BoardCell = {visited: false, startNode: false, targetNode: false, wall: true}
         updateBoardNode(coordinates, boardCell)
       }

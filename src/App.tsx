@@ -59,26 +59,6 @@ function App() {
   //   setMouseStatus({ down: false, move: false, up: true });
   // };
 
-  // const addWalls = useCallback((coordinates: string): void => {
-  //   setBoard((prevBoard) => ({
-  //     ...prevBoard,
-  //     [coordinates]: { ...prevBoard[coordinates], wall: true },
-  //   }));
-  // }, []);
-
-  // const updateBoardNode = (
-  //   coordinates: string,
-  //   updatedNode: BoardCell
-  // ): void => {
-  //   console.log('update board plz', updatedNode);
-  //   setBoard((prevBoard) => ({
-  //     ...prevBoard,
-  //     [coordinates]: { ...prevBoard[coordinates], wall: true },
-  //   }));
-  //   setTestCoordinates(coordinates)
-  //   console.log(board[coordinates])
-  // };
-
   const updateBoardNode = (
     coordinates: string,
     updatedNode: BoardCell
@@ -91,20 +71,8 @@ function App() {
     setTestCoordinates(coordinates)
   };
 
-  // const updateBoardNode = useCallback((
-  //   coordinates: string,
-  //   updatedNode: BoardCell
-  // ): void => {
-  //   console.log('update board plz', updatedNode)
-  //   setBoard((prevBoard) => ({
-  //     ...prevBoard,
-  //     [coordinates]: { ...prevBoard[coordinates], updatedNode },
-  //   }));
-  // },[]);
-
   const { handleMouseDown, handleMouseMove, handleMouseUp } = useMouseEvents({
     cursorMode,
-    // addWalls,
     updateBoardNode,
     setStartCoordinates,
     setTargetCoordinates,
