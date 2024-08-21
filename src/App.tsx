@@ -3,7 +3,6 @@ import { CursorModeType } from './types/CursorTypes';
 import Navbar from './components/Navbar';
 import Maze from './components/Maze';
 import './App.css';
-import { useMouseEvents } from './hooks/useMouseEvents';
 
 export interface BoardCell {
   visited: boolean;
@@ -30,34 +29,30 @@ function App() {
   const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
   const [testCoordinates, setTestCoordinates] = useState<string>('');
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
-  // const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
-  //   down: false,
-  //   move: false,
-  //   up: false,
-  // });
+  const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
+    down: false,
+    move: false,
+    up: false,
+  });
 
-  // const handleMouseDown = (coordinates: string): void => {
-  //   // setMouseStatus({ ...mouseStatus, down: true });
-  //   setMouseStatus({down: true, move: false, up: false });
-  //   if (cursorMode === 'start') {
-  //     setStartCoordinates(coordinates);
-  //   } else if (cursorMode === 'target') {
-  //     setTargetCoordinates(coordinates);
-  //   } else if (cursorMode === 'walls') {
-  //     addWalls(coordinates);
-  //   }
-  // };
+  const handleMouseDown = (coordinates: string): void => {
+    // setMouseStatus({ ...mouseStatus, down: true });
+    setMouseStatus({down: true, move: false, up: false });
+    if (cursorMode === 'start') {
+      setStartCoordinates(coordinates);
+    } else if (cursorMode === 'target') {
+      setTargetCoordinates(coordinates);
+    } else if (cursorMode === 'walls') {
+      addWalls(coordinates);
+    }
+  };
 
-  // const handleMouseMove = (coordinates: string): void => {
-  //   setMouseStatus({ ...mouseStatus, move: true });
-  //   if (cursorMode === 'walls') {
-  //     addWalls(coordinates);
-  //   }
-  // };
-
-  // const handleMouseUp = (): void => {
-  //   setMouseStatus({ down: false, move: false, up: true });
-  // };
+  const handleMouseMove = (coordinates: string): void => {
+    setMouseStatus({ ...mouseStatus, move: true });
+    if (cursorMode === 'walls') {
+      addWalls(coordinates);
+    }
+  };
 
   const updateBoardNode = (
     coordinates: string,
