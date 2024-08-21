@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { MouseStatuses } from '../App';
 import { CursorModeType } from '../types/CursorTypes';
 
@@ -37,30 +37,31 @@ export const useMouseEvents = ({
 
   const handleMouseMove = useCallback(
     (coordinates: string): void => {
-      setMouseStatus({ ...mouseStatus, move: true });
-      if (cursorMode === 'walls' && mouseStatus.down && mouseStatus.move) {
+      setMouseStatus({ down: true, move: true, up: false });
+      if (cursorMode === 'walls') {
         addWalls(coordinates);
-        console.log('painting: ', mouseStatus);
       }
-      document.addEventListener(
-        'mouseup',
-        () => {
-          setMouseStatus({ down: false, move: false, up: true });
-        },
-        { once: true }
-      );
     },
-    [cursorMode, addWalls, mouseStatus]
+    [cursorMode, addWalls]
   );
 
   const handleMouseUp = useCallback((): void => {
     setMouseStatus({ down: false, move: false, up: true });
   }, []);
 
-  return {
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-    mouseStatus,
-  };
+  useEffect(() => {
+    const handleMouseOut = (event: MouseEvent) => {
+      if (mouseStatus.down) {
+        setMouseStatus({ down: false, move: false, up: true });
+      }
+    };
+    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseout', handleMouseOut);
+
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseout', handleMouseOut);
+    };
+  }, [mouseStatus.down, handleMouseUp]);
+  return { handleMouseDown, handleMouseMove, handleMouseUp };
 };
