@@ -1,17 +1,19 @@
 import { useState, useCallback } from 'react';
-import { MouseStatuses } from '../App';
+import { BoardCell, MouseStatuses } from '../App';
 import { CursorModeType } from '../types/CursorTypes';
 
 interface UseMouseEventParams {
   cursorMode: CursorModeType;
-  addWalls: (coordinates: string) => void;
+  // addWalls: (coordinates: string) => void;
+  updateBoardNode: (coordinates: string, boardCell: BoardCell) => void;
   setStartCoordinates: (coordinates: string) => void;
   setTargetCoordinates: (coordinates: string) => void;
 }
 
 export const useMouseEvents = ({
   cursorMode,
-  addWalls,
+  // addWalls,
+  updateBoardNode,
   setStartCoordinates,
   setTargetCoordinates,
 }: UseMouseEventParams) => {
@@ -29,28 +31,50 @@ export const useMouseEvents = ({
       } else if (cursorMode === 'target') {
         setTargetCoordinates(coordinates);
       } else if (cursorMode === 'walls') {
-        addWalls(coordinates);
+        // addWalls(coordinates);
+        const boardCell: BoardCell = {visited: false, startNode: false, targetNode: false, wall: true}
+        updateBoardNode(coordinates, boardCell)
       }
     },
-    [cursorMode, addWalls, setStartCoordinates, setTargetCoordinates]
+    [cursorMode, updateBoardNode, setStartCoordinates, setTargetCoordinates]
   );
+
+  // const handleMouseMove = useCallback(
+  //   (coordinates: string): void => {
+  //     // setMouseStatus({ ...mouseStatus, move: true });
+  //     // if (cursorMode === 'walls' && mouseStatus.down && mouseStatus.move) {
+  //     if (cursorMode === 'walls' && mouseStatus.down) {
+  //       setMouseStatus((prev) => ({ ...prev, move: true }));
+  //             // setMouseStatus({ ...mouseStatus, move: true });
+
+
+  //       addWalls(coordinates);
+  //       console.log('painting: ', mouseStatus);
+  //     }
+  //     document.addEventListener(
+  //       'mouseup',
+  //       () => {
+  //         setMouseStatus({ down: false, move: false, up: true });
+  //       },
+  //       { once: true }
+  //     );
+  //   },
+  //   [cursorMode, addWalls, mouseStatus]
+  // );
 
   const handleMouseMove = useCallback(
     (coordinates: string): void => {
-      setMouseStatus({ ...mouseStatus, move: true });
-      if (cursorMode === 'walls' && mouseStatus.down && mouseStatus.move) {
-        addWalls(coordinates);
-        console.log('painting: ', mouseStatus);
-      }
-      document.addEventListener(
-        'mouseup',
-        () => {
-          setMouseStatus({ down: false, move: false, up: true });
-        },
-        { once: true }
-      );
+      // setMouseStatus((prevStatus) => {
+      //   if (prevStatus.down && cursorMode === 'walls') {
+      //     addWalls(coordinates); // Add wall on drag
+      //     return { ...prevStatus, move: true };
+      //   }
+      //   return prevStatus;
+      // });
+      // console.log('coordinates: ', coordinates)
     },
-    [cursorMode, addWalls, mouseStatus]
+    // [cursorMode, addWalls]
+    []
   );
 
   const handleMouseUp = useCallback((): void => {
@@ -61,6 +85,5 @@ export const useMouseEvents = ({
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
-    mouseStatus,
   };
 };

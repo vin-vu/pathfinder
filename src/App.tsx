@@ -28,6 +28,7 @@ function App() {
   const [board, setBoard] = useState<Board>({});
   const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
   const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
+  const [testCoordinates, setTestCoordinates] = useState<string>('');
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   // const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
   //   down: false,
@@ -58,20 +59,56 @@ function App() {
   //   setMouseStatus({ down: false, move: false, up: true });
   // };
 
-  const addWalls = useCallback((coordinates: string): void => {
+  // const addWalls = useCallback((coordinates: string): void => {
+  //   setBoard((prevBoard) => ({
+  //     ...prevBoard,
+  //     [coordinates]: { ...prevBoard[coordinates], wall: true },
+  //   }));
+  // }, []);
+
+  // const updateBoardNode = (
+  //   coordinates: string,
+  //   updatedNode: BoardCell
+  // ): void => {
+  //   console.log('update board plz', updatedNode);
+  //   setBoard((prevBoard) => ({
+  //     ...prevBoard,
+  //     [coordinates]: { ...prevBoard[coordinates], wall: true },
+  //   }));
+  //   setTestCoordinates(coordinates)
+  //   console.log(board[coordinates])
+  // };
+
+  const updateBoardNode = (
+    coordinates: string,
+    updatedNode: BoardCell
+  ): void => {
+    console.log('update board plz', updatedNode);
     setBoard((prevBoard) => ({
       ...prevBoard,
-      [coordinates]: { ...prevBoard[coordinates], wall: true },
+      [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
     }));
-  }, []);
+    setTestCoordinates(coordinates)
+  };
 
-  const { handleMouseDown, handleMouseMove, handleMouseUp, mouseStatus } =
-    useMouseEvents({
-      cursorMode,
-      addWalls,
-      setStartCoordinates,
-      setTargetCoordinates,
-    });
+  // const updateBoardNode = useCallback((
+  //   coordinates: string,
+  //   updatedNode: BoardCell
+  // ): void => {
+  //   console.log('update board plz', updatedNode)
+  //   setBoard((prevBoard) => ({
+  //     ...prevBoard,
+  //     [coordinates]: { ...prevBoard[coordinates], updatedNode },
+  //   }));
+  // },[]);
+
+  const { handleMouseDown, handleMouseMove, handleMouseUp } = useMouseEvents({
+    cursorMode,
+    // addWalls,
+    updateBoardNode,
+    setStartCoordinates,
+    setTargetCoordinates,
+  });
 
   const generateBoard = useCallback(
     (
@@ -134,6 +171,11 @@ function App() {
     );
     setBoard(newboard);
   }, [generateBoard, rows, columns, startCoordinates, targetCoordinates]);
+
+  useEffect(() => {
+    console.log('test coord: ', testCoordinates)
+    console.log('hello ', board[testCoordinates])
+  }, [testCoordinates, board])
 
   return (
     <>
