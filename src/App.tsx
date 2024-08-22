@@ -25,58 +25,13 @@ export type Board = {
 function App() {
   const rows: number = 15;
   const columns: number = 30;
+  const initalStartCoordinates: string = '7,6';
+  const initialTargetCoordinates: string = '7,23';
   const [board, setBoard] = useState<Board>({});
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   const [resetStatus, setResetStatus] = useState<boolean>(false);
-  // const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
-  // const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
-  // const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
-  //   down: false,
-  //   move: false,
-  //   up: false,
-  // });
 
-  // const handleMouseDown = (coordinates: string): void => {
-  //   // setMouseStatus({ ...mouseStatus, down: true });
-  //   setMouseStatus({down: true, move: false, up: false });
-  //   if (cursorMode === 'start') {
-  //     setStartCoordinates(coordinates);
-  //   } else if (cursorMode === 'target') {
-  //     setTargetCoordinates(coordinates);
-  //   } else if (cursorMode === 'walls') {
-  //     addWalls(coordinates);
-  //   }
-  // };
-
-  // const handleMouseMove = (coordinates: string): void => {
-  //   setMouseStatus({ ...mouseStatus, move: true });
-  //   if (cursorMode === 'walls') {
-  //     addWalls(coordinates);
-  //   }
-  // };
-
-  const updateBoardNode = (
-    coordinates: string,
-    updatedNode: BoardCell
-  ): void => {
-    console.log('update board plz', updatedNode);
-    setBoard((prevBoard) => ({
-      ...prevBoard,
-      [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-    }));
-  };
-
-  const { handleMouseDown, handleMouseMove, handleMouseUp } = useMouseEvents({
-    cursorMode,
-    updateBoardNode,
-    // setStartCoordinates,
-    // setTargetCoordinates,
-  });
-
-  const initalStartCoordinates: string = '7,6';
-  const initialTargetCoordinates: string = '7,23';
-
-  const generateBoardNew = useCallback(
+  const generateBoard = useCallback(
     (rows: number, columns: number): Board => {
       const newBoard: Board = {};
       for (let i = 0; i < rows; i += 1) {
@@ -111,26 +66,42 @@ function App() {
     []
   );
 
-  const resetBoardNew = useCallback((): void => {
-    const newBoard: Board = generateBoardNew(rows, columns);
+  const resetBoard = useCallback((): void => {
+    const newBoard: Board = generateBoard(rows, columns);
     setBoard(newBoard);
-  }, [generateBoardNew]);
+  }, [generateBoard]);
+
+  const updateBoardNode = (
+    coordinates: string,
+    updatedNode: BoardCell
+  ): void => {
+    console.log('update board plz', updatedNode);
+    setBoard((prevBoard) => ({
+      ...prevBoard,
+      [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+    }));
+  };
 
   const updateResetStateTrue = (): void => {
     setResetStatus(true);
   };
 
   useEffect(() => {
-    const newBoard: Board = generateBoardNew(rows, columns);
+    const newBoard: Board = generateBoard(rows, columns);
     setBoard(newBoard);
-  }, [generateBoardNew]);
+  }, [generateBoard]);
 
   useEffect(() => {
     if (resetStatus) {
-      resetBoardNew();
+      resetBoard();
       setResetStatus(false);
     }
-  }, [resetBoardNew, resetStatus]);
+  }, [resetBoard, resetStatus]);
+
+  const { handleMouseDown, handleMouseMove, handleMouseUp } = useMouseEvents({
+    cursorMode,
+    updateBoardNode,
+  });
 
   return (
     <>

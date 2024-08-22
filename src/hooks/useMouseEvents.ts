@@ -5,16 +5,12 @@ import { CursorModeType } from '../types/CursorTypes';
 interface UseMouseEventParams {
   cursorMode: CursorModeType;
   updateBoardNode: (coordinates: string, boardCell: BoardCell) => void;
-  // setStartCoordinates: (coordinates: string) => void;
-  // setTargetCoordinates: (coordinates: string) => void;
 }
 
 export const useMouseEvents = ({
   cursorMode,
   updateBoardNode,
-}: // setStartCoordinates,
-// setTargetCoordinates,
-UseMouseEventParams) => {
+}: UseMouseEventParams) => {
   const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
     down: false,
     move: false,
@@ -25,7 +21,6 @@ UseMouseEventParams) => {
     (coordinates: string): void => {
       setMouseStatus({ down: true, move: false, up: false });
       if (cursorMode === 'start') {
-        // setStartCoordinates(coordinates);
         const startCell: BoardCell = {
           visited: false,
           startNode: true,
@@ -34,7 +29,6 @@ UseMouseEventParams) => {
         };
         updateBoardNode(coordinates, startCell);
       } else if (cursorMode === 'target') {
-        // setTargetCoordinates(coordinates);
         const targetCell: BoardCell = {
           visited: false,
           startNode: false,
