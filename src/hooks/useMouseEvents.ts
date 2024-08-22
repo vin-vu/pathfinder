@@ -5,16 +5,16 @@ import { CursorModeType } from '../types/CursorTypes';
 interface UseMouseEventParams {
   cursorMode: CursorModeType;
   updateBoardNode: (coordinates: string, boardCell: BoardCell) => void;
-  setStartCoordinates: (coordinates: string) => void;
-  setTargetCoordinates: (coordinates: string) => void;
+  // setStartCoordinates: (coordinates: string) => void;
+  // setTargetCoordinates: (coordinates: string) => void;
 }
 
 export const useMouseEvents = ({
   cursorMode,
   updateBoardNode,
-  // setStartCoordinates,
-  // setTargetCoordinates,
-}: UseMouseEventParams) => {
+}: // setStartCoordinates,
+// setTargetCoordinates,
+UseMouseEventParams) => {
   const [mouseStatus, setMouseStatus] = useState<MouseStatuses>({
     down: false,
     move: false,
@@ -26,19 +26,33 @@ export const useMouseEvents = ({
       setMouseStatus({ down: true, move: false, up: false });
       if (cursorMode === 'start') {
         // setStartCoordinates(coordinates);
-        const startCell: BoardCell = {visited: false, startNode: true, targetNode: false, wall: false}
-        updateBoardNode(coordinates, startCell)
+        const startCell: BoardCell = {
+          visited: false,
+          startNode: true,
+          targetNode: false,
+          wall: false,
+        };
+        updateBoardNode(coordinates, startCell);
       } else if (cursorMode === 'target') {
         // setTargetCoordinates(coordinates);
-        const targetCell: BoardCell = {visited: false, startNode: false, targetNode: true, wall: false}
-        updateBoardNode(coordinates, targetCell)
+        const targetCell: BoardCell = {
+          visited: false,
+          startNode: false,
+          targetNode: true,
+          wall: false,
+        };
+        updateBoardNode(coordinates, targetCell);
       } else if (cursorMode === 'walls') {
-        const boardCell: BoardCell = {visited: false, startNode: false, targetNode: false, wall: true}
-        updateBoardNode(coordinates, boardCell)
+        const boardCell: BoardCell = {
+          visited: false,
+          startNode: false,
+          targetNode: false,
+          wall: true,
+        };
+        updateBoardNode(coordinates, boardCell);
       }
     },
     [cursorMode, updateBoardNode]
-    // [cursorMode, updateBoardNode, setStartCoordinates, setTargetCoordinates]
   );
 
   // const handleMouseMove = useCallback(
@@ -48,7 +62,6 @@ export const useMouseEvents = ({
   //     if (cursorMode === 'walls' && mouseStatus.down) {
   //       setMouseStatus((prev) => ({ ...prev, move: true }));
   //             // setMouseStatus({ ...mouseStatus, move: true });
-
 
   //       addWalls(coordinates);
   //       console.log('painting: ', mouseStatus);
