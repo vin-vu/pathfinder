@@ -30,6 +30,8 @@ function App() {
   const [board, setBoard] = useState<Board>({});
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   const [resetStatus, setResetStatus] = useState<boolean>(false);
+  const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
+  const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
 
   const generateBoard = useCallback(
     (rows: number, columns: number): Board => {
@@ -37,14 +39,14 @@ function App() {
       for (let i = 0; i < rows; i += 1) {
         for (let j = 0; j < columns; j += 1) {
           const coordinates: string = `${i},${j}`;
-          if (coordinates === initalStartCoordinates) {
+          if (coordinates === startCoordinates) {
             newBoard[coordinates] = {
               visited: false,
               startNode: true,
               targetNode: false,
               wall: false,
             };
-          } else if (coordinates === initialTargetCoordinates) {
+          } else if (coordinates === targetCoordinates) {
             newBoard[coordinates] = {
               visited: false,
               startNode: false,
@@ -63,7 +65,7 @@ function App() {
       }
       return newBoard;
     },
-    []
+    [startCoordinates, targetCoordinates]
   );
 
   const resetBoard = useCallback((): void => {
@@ -75,11 +77,32 @@ function App() {
     coordinates: string,
     updatedNode: BoardCell
   ): void => {
-    console.log('update board plz', updatedNode);
-    setBoard((prevBoard) => ({
-      ...prevBoard,
-      [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-    }));
+    if (updatedNode.startNode) {
+      setBoard((prevBoard) => ({
+        ...prevBoard,
+        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+        [startCoordinates]: {
+          ...prevBoard[startCoordinates],
+          startNode: false,
+        },
+      }));
+      setStartCoordinates(coordinates);
+    } else if (updatedNode.targetNode) {
+      setBoard((prevBoard) => ({
+        ...prevBoard,
+        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+        [targetCoordinates]: {
+          ...prevBoard[targetCoordinates],
+          targetNode: false,
+        },
+      }));
+      setTargetCoordinates(coordinates);
+    } else if (updatedNode.wall) {
+      setBoard((prevBoard) => ({
+        ...prevBoard,
+        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+      }));
+    }
   };
 
   const updateResetStateTrue = (): void => {
