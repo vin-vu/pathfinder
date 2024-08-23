@@ -30,47 +30,34 @@ function App() {
   const [board, setBoard] = useState<Board>({});
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   const [resetStatus, setResetStatus] = useState<boolean>(false);
-  const [startCoordinates, setStartCoordinates] = useState<string>('7,6');
-  const [targetCoordinates, setTargetCoordinates] = useState<string>('7,23');
-
-  const generateBoard = useCallback(
-    (rows: number, columns: number): Board => {
-      const newBoard: Board = {};
-      for (let i = 0; i < rows; i += 1) {
-        for (let j = 0; j < columns; j += 1) {
-          const coordinates: string = `${i},${j}`;
-          if (coordinates === startCoordinates) {
-            newBoard[coordinates] = {
-              visited: false,
-              startNode: true,
-              targetNode: false,
-              wall: false,
-            };
-          } else if (coordinates === targetCoordinates) {
-            newBoard[coordinates] = {
-              visited: false,
-              startNode: false,
-              targetNode: true,
-              wall: false,
-            };
-          } else {
-            newBoard[coordinates] = {
-              visited: false,
-              startNode: false,
-              targetNode: false,
-              wall: false,
-            };
-          }
-        }
-      }
-      return newBoard;
-    },
-    [startCoordinates, targetCoordinates]
+  const [startCoordinates, setStartCoordinates] = useState<string>(
+    initalStartCoordinates
   );
+  const [targetCoordinates, setTargetCoordinates] = useState<string>(
+    initialTargetCoordinates
+  );
+
+  const generateBoard = useCallback((rows: number, columns: number): Board => {
+    const newBoard: Board = {};
+    for (let i = 0; i < rows; i += 1) {
+      for (let j = 0; j < columns; j += 1) {
+        const coordinates: string = `${i},${j}`;
+        newBoard[coordinates] = {
+          visited: false,
+          startNode: coordinates === initalStartCoordinates,
+          targetNode: coordinates === initialTargetCoordinates,
+          wall: false,
+        };
+      }
+    }
+    return newBoard;
+  }, []);
 
   const resetBoard = useCallback((): void => {
     const newBoard: Board = generateBoard(rows, columns);
     setBoard(newBoard);
+    setStartCoordinates(initalStartCoordinates);
+    setTargetCoordinates(initialTargetCoordinates);
   }, [generateBoard]);
 
   const updateBoardNode = (
