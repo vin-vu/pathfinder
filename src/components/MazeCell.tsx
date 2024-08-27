@@ -40,7 +40,7 @@ export default function MazeCell({
         }}
         onMouseDown={() => onMouseDown(coordinates)}
         onMouseMove={() => onMouseMove(coordinates)}
-        onMouseUp={() => onMouseUp()}
+        // onMouseUp={() => onMouseUp()}
       ></Box>
     </Grid>
   );
