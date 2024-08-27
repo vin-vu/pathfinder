@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import { CursorModeType } from './types/CursorTypes';
 import { useMouseEvents } from './hooks/useMouseEvents';
 import Navbar from './components/Navbar';
 import Maze from './components/Maze';
@@ -21,6 +20,8 @@ export interface MouseStatuses {
 export type Board = {
   [key: string]: BoardCell;
 };
+
+export type CursorModeType = 'none' | 'start' | 'target' | 'walls';
 
 function App() {
   const rows: number = 15;
@@ -121,7 +122,6 @@ function App() {
       />
       <Maze
         board={board}
-        cursorMode={cursorMode}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         columns={columns}

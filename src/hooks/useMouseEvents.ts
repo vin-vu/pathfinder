@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { BoardCell, MouseStatuses } from '../App';
-import { CursorModeType } from '../types/CursorTypes';
+import { BoardCell, CursorModeType, MouseStatuses } from '../App';
 
 interface UseMouseEventParams {
   cursorMode: CursorModeType;
