@@ -4,7 +4,6 @@ import { BoardCell } from '../App';
 interface MazeCellProps {
   onMouseDown: (coordinates: string) => void;
   onMouseMove: (coordinates: string) => void;
-  onMouseUp: () => void;
   cell: BoardCell;
   coordinates: string;
 }
@@ -27,7 +26,6 @@ export default function MazeCell({
   coordinates,
   onMouseDown,
   onMouseMove,
-  onMouseUp,
 }: MazeCellProps) {
   return (
     <Grid item>
@@ -40,7 +38,6 @@ export default function MazeCell({
         }}
         onMouseDown={() => onMouseDown(coordinates)}
         onMouseMove={() => onMouseMove(coordinates)}
-        // onMouseUp={() => onMouseUp()}
       ></Box>
     </Grid>
   );

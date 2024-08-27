@@ -7,7 +7,6 @@ interface MazeProps {
   board: Board;
   onMouseDown: (coordinates: string) => void;
   onMouseMove: (coordinates: string) => void;
-  onMouseUp: () => void;
   cursorMode: CursorModeType;
   columns: number;
 }
@@ -16,7 +15,6 @@ export default function Maze({
   board,
   onMouseDown,
   onMouseMove,
-  onMouseUp,
   columns,
 }: MazeProps) {
   return (
@@ -34,7 +32,6 @@ export default function Maze({
           coordinates={coordinates}
           onMouseDown={() => onMouseDown(coordinates)}
           onMouseMove={() => onMouseMove(coordinates)}
-          onMouseUp={() => onMouseUp()}
         />
       ))}
     </Grid>

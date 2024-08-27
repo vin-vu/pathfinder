@@ -108,7 +108,7 @@ function App() {
     }
   }, [resetBoard, resetStatus]);
 
-  const { handleMouseDown, handleMouseMove, handleMouseUp } = useMouseEvents({
+  const { handleMouseDown, handleMouseMove } = useMouseEvents({
     cursorMode,
     updateBoardNode,
   });
@@ -124,7 +124,6 @@ function App() {
         cursorMode={cursorMode}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
         columns={columns}
       />
     </>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { BoardCell, MouseStatuses } from '../App';
 import { CursorModeType } from '../types/CursorTypes';
 
@@ -73,13 +73,21 @@ export const useMouseEvents = ({
     [cursorMode, updateBoardNode, mouseStatus]
   );
 
-  document.addEventListener('dragstart', (event) => {
-    event.preventDefault();
-  });
-
   const handleMouseUp = useCallback((): void => {
     setMouseStatus({ down: false, move: false, up: true });
     document.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
+  useEffect(() => {
+    const handleDragStart = (event: DragEvent) => {
+      event.preventDefault();
+    };
+
+    document.addEventListener('dragstart', handleDragStart);
+
+    return () => {
+      document.removeEventListener('dragstart', handleDragStart);
+    };
   }, []);
 
   return {
