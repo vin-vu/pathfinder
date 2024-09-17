@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useMouseEvents } from './hooks/useMouseEvents';
 import Navbar from './components/Navbar';
 import Maze from './components/Maze';
+import BreadthFirstSearch from './algorithm/BreadthFirstSearch';
 import './App.css';
 
 export interface BoardCell {
@@ -97,6 +98,16 @@ function App() {
     setResetStatus(true);
   };
 
+  const runAlgo = () => {
+    BreadthFirstSearch({
+      board,
+      startCoordinates,
+      targetCoordinates,
+      rows,
+      columns,
+    });
+  };
+
   useEffect(() => {
     const newBoard: Board = generateBoard(rows, columns);
     setBoard(newBoard);
@@ -119,6 +130,7 @@ function App() {
       <Navbar
         setCursorMode={setCursorMode}
         updateResetStateTrue={updateResetStateTrue}
+        runAlgo={runAlgo}
       />
       <Maze
         board={board}

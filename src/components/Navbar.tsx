@@ -8,11 +8,13 @@ import React from 'react';
 interface NavbarProps {
   setCursorMode: React.Dispatch<React.SetStateAction<CursorModeType>>;
   updateResetStateTrue: () => void;
+  runAlgo: () => void;
 }
 
 export default function Navbar({
   setCursorMode,
   updateResetStateTrue,
+  runAlgo,
 }: NavbarProps) {
   return (
     <>
@@ -38,7 +40,9 @@ export default function Navbar({
             <Button color="inherit" onClick={() => updateResetStateTrue()}>
               CLEAR BOARD
             </Button>
-            <Button color="inherit">RUN ALGORITHM</Button>
+            <Button color="inherit" onClick={() => runAlgo()}>
+              RUN ALGORITHM
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
