@@ -102,6 +102,7 @@ function App() {
 
   const updateResetStateTrue = (): void => {
     setResetStatus(true);
+    setPath([]);
   };
 
   const runAlgo = () => {
