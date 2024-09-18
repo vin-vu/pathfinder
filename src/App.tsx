@@ -6,7 +6,6 @@ import BreadthFirstSearch from './algorithm/BreadthFirstSearch';
 import './App.css';
 
 export interface BoardCell {
-  visited: boolean;
   startNode: boolean;
   targetNode: boolean;
   wall: boolean;
@@ -46,7 +45,6 @@ function App() {
       for (let j = 0; j < columns; j += 1) {
         const coordinates: string = `${i},${j}`;
         newBoard[coordinates] = {
-          visited: false,
           startNode: coordinates === initalStartCoordinates,
           targetNode: coordinates === initialTargetCoordinates,
           wall: false,

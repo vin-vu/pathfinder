@@ -21,7 +21,6 @@ export const useMouseEvents = ({
       setMouseStatus({ down: true, move: false, up: false });
       if (cursorMode === 'start') {
         const startCell: BoardCell = {
-          visited: false,
           startNode: true,
           targetNode: false,
           wall: false,
@@ -29,7 +28,6 @@ export const useMouseEvents = ({
         updateBoardNode(coordinates, startCell);
       } else if (cursorMode === 'target') {
         const targetCell: BoardCell = {
-          visited: false,
           startNode: false,
           targetNode: true,
           wall: false,
@@ -37,7 +35,6 @@ export const useMouseEvents = ({
         updateBoardNode(coordinates, targetCell);
       } else if (cursorMode === 'walls') {
         const wallCell: BoardCell = {
-          visited: false,
           startNode: false,
           targetNode: false,
           wall: true,
@@ -61,7 +58,6 @@ export const useMouseEvents = ({
         setMouseStatus({ down: true, move: true, up: false });
 
         const boardCell: BoardCell = {
-          visited: false,
           startNode: false,
           targetNode: false,
           wall: true,
