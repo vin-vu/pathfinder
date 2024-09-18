@@ -20,7 +20,6 @@ export default function BreadthFirstSearch({
   const parentMap: { [key: string]: string | null } = {
     [startCoordinates]: null,
   };
-  console.log('board: ', board);
 
   visited.add(startCoordinates);
 
@@ -31,16 +30,37 @@ export default function BreadthFirstSearch({
     [1, 0],
   ];
 
-  // while (queue.length > 0) {
-  //   const current = queue.shift();
+  while (queue.length > 0) {
+    const current = queue.shift()!;
 
-  //   if (current === targetCoordinates) {
-  //     // handle the short path here
-  //   }
+    if (current === targetCoordinates) {
+      // handle the short path here
+      console.log('found target: ', targetCoordinates)
+      return
+    }
 
-  //   // explore neighbors
-  //   for (const direction of directions) {
-  //     const [currentCoordinateRow, currentCoordinateCol] = current.split(',').map(Number);
-  //   }
-  // }
+    const [currentRow, currentCol] = current.split(',').map(Number);
+    // explore neighbors
+    for (const direction of directions) {
+      const newRow = currentRow + direction[0];
+      const newCol = currentCol + direction[1];
+      const newCoordinate = `${newRow},${newCol}`;
+
+      // make sure neighbors are within grid boundaries, not a wall, and unvisited
+      if (
+        0 <= newRow &&
+        newRow < rows &&
+        0 <= newCol &&
+        newCol < columns &&
+        !board[newCoordinate].wall &&
+        !visited.has(newCoordinate)
+      ) {
+        queue.push(newCoordinate);
+        visited.add(newCoordinate);
+        parentMap[newCoordinate] = current;
+        // console.log('new coord: ', newCoordinate);
+      }
+    }
+  }
+  console.log('parent map: ', parentMap)
 }
