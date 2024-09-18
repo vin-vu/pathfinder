@@ -36,6 +36,14 @@ export default function BreadthFirstSearch({
     if (current === targetCoordinates) {
       // handle the short path here
       console.log('found target: ', targetCoordinates)
+      const path: string[] = [];
+      let currentCoordinates: string | null = current;
+      while (currentCoordinates) {
+        path.push(currentCoordinates);
+        const previousNode: string | null = parentMap[currentCoordinates];
+        currentCoordinates = previousNode;
+      }
+      console.log('path: ', path)
       return
     }
 
@@ -58,7 +66,6 @@ export default function BreadthFirstSearch({
         queue.push(newCoordinate);
         visited.add(newCoordinate);
         parentMap[newCoordinate] = current;
-        // console.log('new coord: ', newCoordinate);
       }
     }
   }
