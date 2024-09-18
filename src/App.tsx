@@ -9,6 +9,7 @@ export interface BoardCell {
   startNode: boolean;
   targetNode: boolean;
   wall: boolean;
+  highlighted: boolean;
 }
 
 export interface MouseStatuses {
@@ -48,6 +49,7 @@ function App() {
           startNode: coordinates === initalStartCoordinates,
           targetNode: coordinates === initialTargetCoordinates,
           wall: false,
+          highlighted: false,
         };
       }
     }
@@ -61,37 +63,42 @@ function App() {
     setTargetCoordinates(initialTargetCoordinates);
   }, [generateBoard]);
 
-  const updateBoardNode = (
-    coordinates: string,
-    updatedNode: BoardCell
-  ): void => {
-    if (updatedNode.startNode) {
-      setBoard((prevBoard) => ({
-        ...prevBoard,
-        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-        [startCoordinates]: {
-          ...prevBoard[startCoordinates],
-          startNode: false,
-        },
-      }));
-      setStartCoordinates(coordinates);
-    } else if (updatedNode.targetNode) {
-      setBoard((prevBoard) => ({
-        ...prevBoard,
-        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-        [targetCoordinates]: {
-          ...prevBoard[targetCoordinates],
-          targetNode: false,
-        },
-      }));
-      setTargetCoordinates(coordinates);
-    } else if (updatedNode.wall) {
-      setBoard((prevBoard) => ({
-        ...prevBoard,
-        [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-      }));
-    }
-  };
+  const updateBoardNode = useCallback(
+    (coordinates: string, updatedNode: BoardCell): void => {
+      if (updatedNode.startNode) {
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+          [startCoordinates]: {
+            ...prevBoard[startCoordinates],
+            startNode: false,
+          },
+        }));
+        setStartCoordinates(coordinates);
+      } else if (updatedNode.targetNode) {
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+          [targetCoordinates]: {
+            ...prevBoard[targetCoordinates],
+            targetNode: false,
+          },
+        }));
+        setTargetCoordinates(coordinates);
+      } else if (updatedNode.wall) {
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+        }));
+      } else if (updatedNode.highlighted) {
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+        }));
+      }
+    },
+    [startCoordinates, targetCoordinates]
+  );
 
   const updateResetStateTrue = (): void => {
     setResetStatus(true);
@@ -121,8 +128,31 @@ function App() {
   }, [resetBoard, resetStatus]);
 
   useEffect(() => {
-    console.log('path: ', path);
-  }, [path]);
+    path?.forEach((coordinates, index) => {
+      setTimeout(() => {
+        const highlightedCell: BoardCell = {
+          startNode: false,
+          targetNode: false,
+          wall: false,
+          highlighted: true,
+        };
+        if (
+          coordinates !== startCoordinates &&
+          coordinates !== targetCoordinates
+        ) {
+          updateBoardNode(coordinates, highlightedCell);
+        }
+        console.log(
+          'start: ',
+          startCoordinates,
+          'target: ',
+          targetCoordinates,
+          'path: ',
+          path
+        );
+      }, index * 50);
+    });
+  }, [path, updateBoardNode, startCoordinates, targetCoordinates]);
 
   const { handleMouseDown, handleMouseMove } = useMouseEvents({
     cursorMode,

@@ -24,6 +24,7 @@ export const useMouseEvents = ({
           startNode: true,
           targetNode: false,
           wall: false,
+          highlighted: false,
         };
         updateBoardNode(coordinates, startCell);
       } else if (cursorMode === 'target') {
@@ -31,6 +32,7 @@ export const useMouseEvents = ({
           startNode: false,
           targetNode: true,
           wall: false,
+          highlighted: false,
         };
         updateBoardNode(coordinates, targetCell);
       } else if (cursorMode === 'walls') {
@@ -38,6 +40,7 @@ export const useMouseEvents = ({
           startNode: false,
           targetNode: false,
           wall: true,
+          highlighted: false,
         };
         updateBoardNode(coordinates, wallCell);
       }
@@ -61,6 +64,7 @@ export const useMouseEvents = ({
           startNode: false,
           targetNode: false,
           wall: true,
+          highlighted: false,
         };
         updateBoardNode(coordinates, boardCell);
       }

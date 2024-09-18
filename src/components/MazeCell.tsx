@@ -9,14 +9,14 @@ interface MazeCellProps {
 }
 
 const handleCellBackgroundColor = (cell: BoardCell): string => {
-  if (cell.visited) {
-    return 'black';
-  } else if (cell.startNode) {
+  if (cell.startNode) {
     return 'blue';
   } else if (cell.targetNode) {
     return 'red';
   } else if (cell.wall) {
     return 'black';
+  } else if (cell.highlighted) {
+    return 'orange';
   }
   return 'white';
 };
@@ -35,6 +35,7 @@ export default function MazeCell({
           width: '30px',
           border: '1px solid gray',
           backgroundColor: handleCellBackgroundColor(cell),
+          transition: 'background-color 0.2s ease-in-out',
         }}
         onMouseDown={() => onMouseDown(coordinates)}
         onMouseMove={() => onMouseMove(coordinates)}
