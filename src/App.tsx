@@ -32,6 +32,7 @@ function App() {
   const [board, setBoard] = useState<Board>({});
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   const [resetStatus, setResetStatus] = useState<boolean>(false);
+  const [path, setPath] = useState<string[]>();
   const [startCoordinates, setStartCoordinates] = useState<string>(
     initalStartCoordinates
   );
@@ -99,13 +100,14 @@ function App() {
   };
 
   const runAlgo = () => {
-    BreadthFirstSearch({
+    const shortestPath: string[] = BreadthFirstSearch({
       board,
       startCoordinates,
       targetCoordinates,
       rows,
       columns,
     });
+    setPath(shortestPath);
   };
 
   useEffect(() => {
@@ -119,6 +121,10 @@ function App() {
       setResetStatus(false);
     }
   }, [resetBoard, resetStatus]);
+
+  useEffect(() => {
+    console.log('path: ', path);
+  }, [path]);
 
   const { handleMouseDown, handleMouseMove } = useMouseEvents({
     cursorMode,

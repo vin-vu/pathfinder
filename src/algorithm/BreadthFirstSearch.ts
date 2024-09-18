@@ -14,7 +14,7 @@ export default function BreadthFirstSearch({
   targetCoordinates,
   rows,
   columns,
-}: BFS) {
+}: BFS): string[] {
   const queue: [string] = [startCoordinates];
   const visited: Set<string> = new Set();
   const parentMap: { [key: string]: string | null } = {
@@ -33,9 +33,8 @@ export default function BreadthFirstSearch({
   while (queue.length > 0) {
     const current = queue.shift()!;
 
+    // handle the short path here to target
     if (current === targetCoordinates) {
-      // handle the short path here
-      console.log('found target: ', targetCoordinates)
       const path: string[] = [];
       let currentCoordinates: string | null = current;
       while (currentCoordinates) {
@@ -43,12 +42,11 @@ export default function BreadthFirstSearch({
         const previousNode: string | null = parentMap[currentCoordinates];
         currentCoordinates = previousNode;
       }
-      console.log('path: ', path)
-      return
+      return path.reverse();
     }
 
+    // explore neighboring nodes
     const [currentRow, currentCol] = current.split(',').map(Number);
-    // explore neighbors
     for (const direction of directions) {
       const newRow = currentRow + direction[0];
       const newCol = currentCol + direction[1];
@@ -69,5 +67,5 @@ export default function BreadthFirstSearch({
       }
     }
   }
-  console.log('parent map: ', parentMap)
+  return [];
 }
