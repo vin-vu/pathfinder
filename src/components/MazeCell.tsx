@@ -21,6 +21,14 @@ const handleCellBackgroundColor = (cell: BoardCell): string => {
   return 'white';
 };
 
+const handleTransition = (cell: BoardCell): string => {
+  if (cell.highlighted) {
+    return 'background-color 0.2s ease-in-out';
+  } else {
+    return '0';
+  }
+};
+
 export default function MazeCell({
   cell,
   coordinates,
@@ -35,7 +43,7 @@ export default function MazeCell({
           width: '30px',
           border: '1px solid gray',
           backgroundColor: handleCellBackgroundColor(cell),
-          transition: 'background-color 0.2s ease-in-out',
+          transition: handleTransition(cell),
         }}
         onMouseDown={() => onMouseDown(coordinates)}
         onMouseMove={() => onMouseMove(coordinates)}
