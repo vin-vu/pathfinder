@@ -132,7 +132,7 @@ function App() {
   }, [resetBoard, resetStatus]);
 
   useEffect(() => {
-    path?.forEach((coordinates, index) => {
+    path.forEach((coordinates, index) => {
       setTimeout(() => {
         const highlightedCell: BoardCell = {
           startNode: false,
@@ -140,15 +140,12 @@ function App() {
           wall: false,
           highlighted: true,
         };
-        if (
-          coordinates !== startCoordinates &&
-          coordinates !== targetCoordinates
-        ) {
+        if (index !== 0 && index !== path.length - 1) {
           updateBoardNode(coordinates, highlightedCell);
         }
       }, index * 50);
     });
-  }, [path, updateBoardNode, startCoordinates, targetCoordinates]);
+  }, [path, updateBoardNode]);
 
   const { handleMouseDown, handleMouseMove } = useMouseEvents({
     cursorMode,
