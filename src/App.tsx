@@ -32,7 +32,7 @@ function App() {
   const [board, setBoard] = useState<Board>({});
   const [cursorMode, setCursorMode] = useState<CursorModeType>('none');
   const [resetStatus, setResetStatus] = useState<boolean>(false);
-  const [path, setPath] = useState<string[]>();
+  const [path, setPath] = useState<string[]>([]);
   const [startCoordinates, setStartCoordinates] = useState<string>(
     initalStartCoordinates
   );
@@ -113,6 +113,9 @@ function App() {
       rows,
       columns,
     });
+    if (!shortestPath.length) {
+      alert('No viable path possible!');
+    }
     setPath(shortestPath);
   };
 
@@ -143,14 +146,6 @@ function App() {
         ) {
           updateBoardNode(coordinates, highlightedCell);
         }
-        console.log(
-          'start: ',
-          startCoordinates,
-          'target: ',
-          targetCoordinates,
-          'path: ',
-          path
-        );
       }, index * 50);
     });
   }, [path, updateBoardNode, startCoordinates, targetCoordinates]);

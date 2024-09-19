@@ -46,11 +46,11 @@ export default function BreadthFirstSearch({
     }
 
     // explore neighboring nodes
-    const [currentRow, currentCol] = current.split(',').map(Number);
+    const [currentRow, currentCol]: number[] = current.split(',').map(Number);
     for (const direction of directions) {
-      const newRow = currentRow + direction[0];
-      const newCol = currentCol + direction[1];
-      const newCoordinate = `${newRow},${newCol}`;
+      const newRow: number = currentRow + direction[0];
+      const newCol: number = currentCol + direction[1];
+      const newCoordinate: string = `${newRow},${newCol}`;
 
       // make sure neighbors are within grid boundaries, not a wall, and unvisited
       if (
