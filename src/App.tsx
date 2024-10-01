@@ -95,6 +95,11 @@ function App() {
           ...prevBoard,
           [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
         }));
+      } else {
+        setBoard((prevBoard) => ({
+          ...prevBoard,
+          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
+        }));
       }
     },
     [startCoordinates, targetCoordinates]
@@ -106,6 +111,7 @@ function App() {
   };
 
   const runAlgo = () => {
+    removeOldPath();
     const shortestPath: string[] = BreadthFirstSearch({
       board,
       startCoordinates,
@@ -117,6 +123,22 @@ function App() {
       alert('No viable path possible!');
     }
     setPath(shortestPath);
+  };
+
+  const removeOldPath = () => {
+    path.forEach((coordinates, index) => {
+      const basicCell: BoardCell = {
+        startNode: false,
+        targetNode: false,
+        wall: false,
+        highlighted: false,
+      };
+      if (index !== 0 && index !== path.length - 1) {
+        console.log('remove highlight');
+        updateBoardNode(coordinates, basicCell);
+      }
+    });
+    setPath([]);
   };
 
   useEffect(() => {
@@ -132,17 +154,19 @@ function App() {
   }, [resetBoard, resetStatus]);
 
   useEffect(() => {
+    if (path.length === 0) return;
+
     path.forEach((coordinates, index) => {
       setTimeout(() => {
-        const highlightedCell: BoardCell = {
-          startNode: false,
-          targetNode: false,
-          wall: false,
-          highlighted: true,
-        };
-        if (index !== 0 && index !== path.length - 1) {
-          updateBoardNode(coordinates, highlightedCell);
-        }
+      const highlightedCell: BoardCell = {
+        startNode: false,
+        targetNode: false,
+        wall: false,
+        highlighted: true,
+      };
+      if (index !== 0 && index !== path.length - 1) {
+        updateBoardNode(coordinates, highlightedCell);
+      }
       }, index * 50);
     });
   }, [path, updateBoardNode]);
