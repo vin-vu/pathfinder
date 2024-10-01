@@ -157,7 +157,6 @@ function App() {
     if (path.length === 0) return;
 
     path.forEach((coordinates, index) => {
-      setTimeout(() => {
       const highlightedCell: BoardCell = {
         startNode: false,
         targetNode: false,
@@ -167,7 +166,6 @@ function App() {
       if (index !== 0 && index !== path.length - 1) {
         updateBoardNode(coordinates, highlightedCell);
       }
-      }, index * 50);
     });
   }, [path, updateBoardNode]);
 
