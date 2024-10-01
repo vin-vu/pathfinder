@@ -85,16 +85,6 @@ function App() {
           },
         }));
         setTargetCoordinates(coordinates);
-      } else if (updatedNode.wall) {
-        setBoard((prevBoard) => ({
-          ...prevBoard,
-          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-        }));
-      } else if (updatedNode.highlighted) {
-        setBoard((prevBoard) => ({
-          ...prevBoard,
-          [coordinates]: { ...prevBoard[coordinates], ...updatedNode },
-        }));
       } else {
         setBoard((prevBoard) => ({
           ...prevBoard,
