@@ -36,7 +36,7 @@ export default function MazeCell({
   onMouseMove,
 }: MazeCellProps) {
   return (
-    <Grid item>
+    <Grid item role="gridcell">
       <Box
         sx={{
           height: '30px',

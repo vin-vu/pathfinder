@@ -31,4 +31,11 @@ describe('App Component', () => {
     });
     expect(runAlgoButton).toBeInTheDocument();
   });
+
+  test('initializes board correctly', () => {
+    render(<App/>)
+
+  const gridItems = screen.getAllByRole('gridcell');
+  expect(gridItems.length).toBe(15 * 30);
+  })
 });
