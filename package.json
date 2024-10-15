@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "http://vin-vu.github.io/pathfinder",
+  "homepage": "https://vin-vu.github.io/pathfinder",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
