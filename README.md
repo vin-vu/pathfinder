@@ -2,21 +2,28 @@
 
 Pathfinder is a React TypeScript project designed to visualize the shortest path between two nodes on a 2D grid using the Breadth-First Search (BFS) algorithm. This project leverages Material UI for its component library, ensuring responsiveness and a modern design.
 
-This project is currently in development.
+Try the application [here](https://vin-vu.github.io/pathfinder/)!
 
 ## Table of Contents
 
 - [Features](#features)
+- [How to Play](#how-to-play)
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
-
 
 ## Features
 
 - **Visualize Pathfinding**: Visualize the shortest path between two nodes on a 2D grid using the BFS algorithm.
 - **Responsive Design**: The project uses Material UI to ensure the interface is responsive and user-friendly.
 - **Interactive Grid**: Users can interact with the grid, setting start and target nodes, and adding walls to see how the algorithm adapts.
+
+## How to Play
+- *Set Start Node* to change placement of the start node
+- *Set Target Node* to change placement of target node
+- *Add walls* to place obstacles (click and drag is supported)
+- *Clear Board* to reset board to default state
+- *Run Algorithm* to reveal the shortest path between the nodes
 
 ## Technologies
 
@@ -33,20 +40,20 @@ To get started with Pathfinder, follow these steps:
    ```bash
    git clone https://github.com/your-username/pathfinder.git
    ```
-   
 2. Navigate to project directory:
+
    ```bash
    cd pathfinder
    ```
 
 3. Install the dependencies:
+
    ```bash
    npm install
    ```
 
-## Usage
-1. To run the project locally, use the following command:
+4. To run the project locally, use the following command:
+
    ```bash
    npm start
    ```
-
